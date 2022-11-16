@@ -1,34 +1,23 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# This Blog is Built with...
 
-## Getting Started
+Please find the overall "tech-stack" for this blog.
 
-First, run the development server:
+1. I am using [Next.js](https://nextjs.org/blog/next-13) 13 for the framework for the blog. The ease with how we can now only change the component that has a state change, is very appealing and refreshing. **WITHOUT TYPESCRIPT**.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+- I am **NOT** using the _Legacy Mode_ with the `./pages` directory.
+- Everything sits in the brand-new `./app` directory.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. I am using [ContentLayer](https://www.contentlayer.dev/docs) to be the data layer.
+3. I have configured MDX (within Contentlayer) to use [Rehype](https://github.com/rehypejs/rehype/blob/main/doc/plugins.md) plugins. I am also using additional MDX plugins for various other features. I am specifically using the following plugins:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- [rehypeSlug](rehype-slug)
+- [rehypeAutolinkHeadings](https://github.com/rehypejs/rehype-autolink-headings)
+- [rehypeCodeTitles](https://github.com/rockchalkwushock/rehype-code-titles)
+- [rehypePrism](https://github.com/timlrx/rehype-prism-plus)
+- [remarkGfm](https://github.com/remarkjs/remark-gfm)
+- [readingTime](https://github.com/mattjennings/remark-reading-time)
+- [toc](https://github.com/JS-DevTools/rehype-toc) -- COMING SOON
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+[NOTE: Excellent guide to all this [universe of Rehype/Remark/etc](https://unifiedjs.com/learn/guide/introduction-to-unified/)]
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+4. I am hosting my Blog on [Vercel Premium Hosting](https://vercel.com/). I tried the service using their Free Hosting and upgraded as the Premium/Paid service has support for unlimited domains. Did I mention how freakin' easy it is to use?
