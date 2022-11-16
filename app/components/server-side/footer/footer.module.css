@@ -1,0 +1,14 @@
+.footer {
+  margin-top: 0;
+  padding-left: 5%;
+  padding-right: 5%;
+  background-color: var(--light-grey-color);
+  margin-top: 2rem;
+}
+
+.inner_footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}

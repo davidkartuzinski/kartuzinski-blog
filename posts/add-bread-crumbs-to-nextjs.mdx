@@ -1,0 +1,242 @@
+---
+title: Add breadcrumbs to a Next.js site
+date: 2022-10-7
+dateModified: 2022-10-7
+author: David Kartuzinski
+description: I wanted to add breadcrumbs to aid navigation for my users and to help for accessibility. This is how I did it.
+category: nextjs
+tags: ['mdx', 'nextjs', 'breadcrumbs']
+canonical: ''
+---
+
+Add breadcrumbs helps with accessibility, navigation and SEO. I like them and I use them on my blog sites. Fortunately, there is a straight forward way to add breadcrumbs to your website. Below are the steps I took to add breadcrumbs.
+
+## The steps to install and style breadcrumbs for a Next.js website
+
+There are a few steps to take to install breadcrumbs on the website.
+
+### Install the package
+
+Even though this plugin has not recently been updated, it still works fine. The plugin is called [nextjs-breadcrumbs](https://github.com/NiklasMencke/nextjs-breadcrumbs). Written specifically for Next.js, the author, [Niklas Mencke](https://github.com/NiklasMencke), states this plugin will only work with Next.js websites.
+
+```bash:install-nextjs-breadcrumbs showLinenumbers
+npm install nextjs-breadcrumbs
+```
+
+### Create a Breadcrumbs Component and import it into your pages
+
+My initial component looks like this.
+
+```js:breadcrumb.js showLinenumbers
+import styles from './breadcrumbs.module.css';
+import { default as NextBreadcrumbs } from 'nextjs-breadcrumbs';
+
+const Breadcrumbs = () => {
+  return (
+    <div className={styles.breadcrumbs_container}>
+      return <NextBreadcrumbs  rootLabel='Home' />;
+    </div>
+  );
+};
+
+export default Breadcrumbs;
+```
+
+There are several options for how to display, style and construct the Breadcrumbs on your site. You can read about all of them on the [https://github.com/NiklasMencke/nextjs-breadcrumbs#pass-custom-list-of-characters-that-should-be-replaced-in-each-label](nextjs-breadcrumbs Github).
+
+You should import the new component into your pages with a standard import statement. Even though the GitHub does an excellent job explaining some the options, I made some notes below:
+
+```js:example-import-statement showLinenumbers
+import Breadcrumbs from '../../../components/core/breadcrumbs';
+```
+
+#### Use the default styles
+
+If you want to use default styles, then you need to add the important statement for the styles into your `_app.js` file
+
+```js:import-statement-of-css showLinenumbers
+import 'nextjs-breadcrumbs/dist/index.css';
+```
+
+Then change the component like this:
+
+```diff-js:breadcrumbs-component-options showLinenumbers
+import styles from './breadcrumbs.module.css';
+import { default as NextBreadcrumbs } from 'nextjs-breadcrumbs';
+
+const Breadcrumbs = () => {
+  return (
+    <div className={styles.breadcrumbs_container}>
+-    return <NextBreadcrumbs  rootLabel='Home' />;
++    return <NextBreadcrumbs useDefaultStyle={true} rootLabel='Home' />;
+    </div>
+  );
+};
+
+export default Breadcrumbs;
+
+```
+
+#### Use Custom styles
+
+I dug into the node modules and copied `nextjs-breadcrumbs/dist/index.css` over into my CSS Modules file called `breadcrumbs.module.css`. I removed a prefix and the default styles are like this:
+
+```css:default-css-styles showLinenumbers
+.breadcrumbs_container ol {
+  list-style: none;
+  overflow: hidden;
+  font: 16px Sans-Serif;
+}
+.breadcrumbs_container li {
+  float: left;
+}
+.breadcrumbs_container li a {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  padding: 10px 0 10px 50px;
+  background: rgb(230, 224, 224);
+  position: relative;
+  display: block;
+  float: left;
+}
+
+.breadcrumbs_container li a::after {
+  content: ' ';
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 50px solid transparent; /* Go big on the size, and let overflow hide */
+  border-bottom: 50px solid transparent;
+  border-left: 30px solid rgb(230, 224, 224);
+  position: absolute;
+  top: 50%;
+  margin-top: -50px;
+  left: 100%;
+  z-index: 2;
+}
+
+.breadcrumbs_container li a::before {
+  content: ' ';
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 50px solid transparent;
+  border-bottom: 50px solid transparent;
+  border-left: 30px solid white;
+  position: absolute;
+  top: 50%;
+  margin-top: -50px;
+  margin-left: 1px;
+  left: 100%;
+  z-index: 1;
+}
+
+.breadcrumbs_container li:first-child a {
+  padding-left: 20px;
+  pointer-events: visible !important;
+  cursor: pointer !important;
+}
+.breadcrumbs_container li:nth-child(2) a {
+  background: rgb(224, 233, 233);
+}
+.breadcrumbs_container li:nth-child(2) a:after {
+  border-left-color: rgb(224, 233, 233);
+}
+.breadcrumbs_container li:nth-child(3) a {
+  background: rgb(224, 233, 233);
+}
+.breadcrumbs_container li:nth-child(3) a:after {
+  border-left-color: rgb(224, 233, 233);
+}
+.breadcrumbs_container li:nth-child(4) a {
+  background: rgb(224, 233, 233);
+}
+.breadcrumbs_container li:nth-child(4) a:after {
+  border-left-color: rgb(224, 233, 233);
+}
+.breadcrumbs_container li:nth-child(5) a {
+  background: rgb(224, 233, 233);
+}
+.breadcrumbs_container li:nth-child(5) a:after {
+  border-left-color: rgb(224, 233, 233);
+}
+.breadcrumbs_container li:last-child a {
+  background: rgb(238, 235, 232) !important;
+  color: black;
+  pointer-events: none;
+  cursor: default;
+  padding-right: 20px;
+}
+.breadcrumbs_container li:last-child a::after {
+  border: 0;
+}
+
+.breadcrumbs_container li a:hover {
+  background: rgb(194, 226, 221);
+}
+.breadcrumbs_container li a:hover:after {
+  border-left-color: rgb(194, 226, 221) !important;
+}
+```
+
+I liked the default styles but they didn't fit my design. So my simple CSS in the `breadcrumbs.module.css` file looks like this:
+
+```css:simple-styled-breadcrumbs showLinenumbers
+.breadcrumbs_container {
+  margin-bottom: 3.5rem;
+}
+
+.breadcrumbs_container ol {
+  list-style: none;
+  overflow: hidden;
+  font-size: 90%;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 25px;
+}
+
+.breadcrumbs_container li {
+  list-style: none;
+  text-transform: capitalize;
+  height: 4rem;
+}
+
+.breadcrumbs_container li a {
+  text-decoration: none;
+  margin-bottom: 0;
+}
+
+.breadcrumbs_container li a::after {
+  content: ' > ';
+  padding: 0 0.5rem;
+}
+
+.breadcrumbs_container li:first-child a {
+  content: ' ';
+  pointer-events: visible !important;
+  cursor: pointer !important;
+}
+.breadcrumbs_container li:first-child a {
+  pointer-events: visible !important;
+  cursor: pointer !important;
+}
+
+.breadcrumbs_container li:last-child a {
+  pointer-events: none;
+  cursor: default;
+  font-weight: 900;
+  font-size: 95%;
+  border-bottom: 1px solid;
+  border-bottom-width: 2px;
+  padding-right: 0;
+  margin-right: 0;
+}
+
+.breadcrumbs_container li:last-child a::after {
+  border: 0;
+  content: none;
+}
+```
+
+There are more options in the GitHub.

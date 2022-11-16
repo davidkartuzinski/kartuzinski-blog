@@ -1,0 +1,9 @@
+.bio {
+  padding-left: 2.5%;
+  padding-right: 2.5%;
+  position: relative;
+}
+
+.bio p {
+  margin-top: 1rem;
+}

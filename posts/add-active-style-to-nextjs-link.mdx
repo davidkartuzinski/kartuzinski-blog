@@ -1,0 +1,112 @@
+---
+title: How to add active style to a Next.js Link
+date: 2022-10-1
+dateModified: 2022-10-1
+author: David Kartuzinski
+description: The Link component in Next.js does not have native support for active state. This is how I solved it.
+category: nextjs
+tags: ['mdx', 'nextjs']
+canonical: ''
+---
+
+I needed to figure out how to create an active state for any of my menu items that were active. Different CSS would be applied. I was transferring a design from Gatsby.js over to Next.js. Gatsby has this built-in. Whereas in Next.js I had to search around.
+
+## Gatsby active state with native Link Component
+
+Gatsby implements active state like so:
+
+```jsx
+<Link
+  // activeStyle={}
+  activeClassName='active' // style in your CSS
+  to={`${link.url}`}
+>
+  {link.label}
+</Link>
+```
+
+Gatsby has two arguements. One if you're using something like Styled-Components. You can but the style object in the `activeStyle` prop above. Otherwise, you can use the `activeClassName` prop and put a class name as a string. This is for using a global stylesheet or css modules. Your can find more information on this in the [Gatsby Documentation](https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-link/#link-api-surface-area)
+
+Unfortunately, these options are not built into Next.js.
+
+## Solving active state for links in Next.js
+
+This is very possible to do use the `useRouter()` function from next.js.
+
+```js
+import Link from 'next/link';
+
+import { HamburgerMenuIcon } from '../icons.js';
+import { useRouter } from 'next/router';
+import styles from './menu.module.css';
+
+// function which we will import into our main component. Can be it's own component.
+function MenuLinkItems() {
+  const router = useRouter();
+  const activeRoute = router.pathname; // find out which url we are at.
+
+  // these can of course be imported from another source
+  const menuLinks = [
+    { id: 1, urlPath: './', label: 'Home' },
+    { id: 2, urlPath: './blog', label: 'Blog' },
+    { id: 3, urlPath: './contact', label: 'Contact' },
+  ];
+
+  return (
+    <ul className='menu'>
+      {menuLinks.map((link) => (
+        <li key={link.id}>
+          // If you're curious, otherwise delete these console.log()s.
+          {console.log(`.${activeRoute}`, '<-- active')}
+          {console.log(link.urlPath, '<-- link')}
+          <Link href={link.urlPath} passHref>
+            <a
+              className={
+                `.${activeRoute}` === link.urlPath ? styles.active : ''
+              }
+            >
+              {link.label}
+            </a>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function Menu() {
+  return (
+    <div className='main-menu'>
+      <label
+        htmlFor='nav-toggle'
+        aria-haspopup='true'
+        aria-controls='nav-toggle'
+        className='nav-toggle-label'
+      >
+        <HamburgerMenuIcon size='35' />
+      </label>
+
+      <input
+        type='checkbox'
+        id='nav-toggle'
+        className='nav-toggle'
+        name='nav-toggle'
+        aria-label='nav-toggle'
+      />
+
+      <nav id='mainmenulabel' role='navigation' aria-label='Main menu'>
+        <MenuLinkItems /> // import component here.
+      </nav>
+    </div>
+  );
+}
+export default Menu;
+```
+
+I did get an `warning`, but there was no way around getting it. If you find a solution that doesn't get this warning, please let me know.
+
+```bash
+next-dev.js?3515:20 Warning: Function components cannot be given refs. Attempts to access this ref will fail. Did you mean to use React.forwardRef()?
+
+Check the render method of `ForwardRef(LinkComponent)`.
+```

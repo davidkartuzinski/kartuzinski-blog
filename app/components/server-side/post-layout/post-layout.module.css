@@ -1,0 +1,47 @@
+.section {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.section .meta {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.section .meta span + span {
+  color: var(--accent);
+}
+
+/* .section .meta svg {
+  color: var(--accent);
+} */
+
+.section .read_more {
+  margin-top: 1rem;
+}
+
+.section a {
+  color: var(--dark-accent);
+  text-decoration: none;
+}
+
+.section a:link {
+  color: var(--dark-accent);
+}
+
+.section a:visited {
+  color: var(--dark-accent);
+}
+
+.section a:hover {
+  color: var(--dark-accent);
+  text-decoration: underline;
+}
+
+.section a:active {
+  color: var(--dark-accent);
+}

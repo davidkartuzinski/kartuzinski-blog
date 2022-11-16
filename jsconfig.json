@@ -1,0 +1,20 @@
+// {
+//   "compilerOptions": {
+//     "baseUrl": ".",
+//     "paths": {
+//       "contentlayer/generated": ["./.contentlayer/generated"]
+//     }
+//   },
+//   "include": [".contentlayer/generated"],
+//   "exclude": ["node_modules"]
+// }
+
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "contentlayer/generated": ["./.contentlayer/generated"]
+    }
+  },
+  "include": [".contentlayer/generated"]
+}

@@ -1,0 +1,273 @@
+---
+title: Set-up heading links with Contentlayer, Nextjs and MDX
+date: 2022-10-4
+dateModified: 2022-10-4
+author: David Kartuzinski
+description: I had a hard time setting up auto heading links for my h1 - h6 tags. I had to figure out the solution from various places.
+category: nextjs
+tags: ['mdx', 'nextjs']
+canonical: ''
+---
+
+I am using ContentLayer, Nextjs and MDX to create a blog.
+
+## Import the two plugins and configure them in your contentlayer.config.js
+
+### Import the two plugins
+
+You need rehype-slug to add anchors to all the headers and then autolinkheadings to change them into links
+
+```bash
+import rehypeSlug from 'rehype-slug';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings
+```
+
+### Configure contentlayer.config.js
+
+Now you import the two plugins at the top.
+
+```js
+import rehypeSlug from 'rehype-slug';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+```
+
+Add them to your makeSource export. I put it in a variable called `contentLayerConfig` and then exported this. But you can directly export it.
+
+```js
+const contentLayerConfig = makeSource({
+  contentDirPath: 'posts',
+  documentTypes: [Post],
+  mdx: {
+    rehypePlugins: [
+      rehypeSlug,
+      [
+        rehypeAutolinkHeadings,
+        {
+          properties: {
+            className: ['anchor'],
+          },
+        },
+      ],
+    ],
+  },
+});
+
+export default contentLayerConfig;
+```
+
+If you have other plugins, it could look like this.
+
+```js {5,8-9} showLineNumbers
+const contentLayerConfig = makeSource({
+  contentDirPath: 'posts',
+  documentTypes: [Post],
+  mdx: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [
+      rehypeSlug,
+      rehypeCodeTitles,
+      rehypePrism,
+      [
+        rehypeAutolinkHeadings,
+        {
+          properties: {
+            className: ['anchor'],
+          },
+        },
+      ],
+    ],
+  },
+});
+
+export default contentLayerConfig;
+```
+
+## Create a custom header components to use in MDX
+
+The second step is to create a customer header tag that MDX will then use in place of the regular heading tags. This will attach our own CSS and make it possible to style them in a way that shows the `#` symbol.
+
+### Create a custom header component
+
+Below is the full code for the custom header component.
+
+```js showLineNumbers
+import Link from 'next/link';
+import styles from './MdxHeadings.module.css';
+import { useState, useEffect } from 'react';
+
+const MdxHeading = ({ h, id, ...rest }) => {
+  // ensure the page has fully loaded before running
+  const [hasMounted, setHasMounted] = useState(false);
+  const VariableHeader = h;
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+  if (!hasMounted) {
+    return null;
+  }
+  // if our heading "H" tag has a class of "id"
+  // if it has an ID return this correct heading with the class associated
+  if (id) {
+    return (
+      <Link href={`#${id}`}>
+        <VariableHeader className={styles.mdx_heading} {...rest} />
+      </Link>
+    );
+  }
+  // if not return a regular unlinked header
+  return <h1 {...rest} />;
+};
+
+// cycle through and make H1 - H6 heading tags to use
+export const MdxH1 = (props) => <MdxHeading h='h1' {...props} />;
+export const MdxH2 = (props) => <MdxHeading h='h2' {...props} />;
+export const MdxH3 = (props) => <MdxHeading h='h3' {...props} />;
+export const MdxH4 = (props) => <MdxHeading h='h4' {...props} />;
+export const MdxH5 = (props) => <MdxHeading h='h5' {...props} />;
+export const MdxH6 = (props) => <MdxHeading h='h6' {...props} />;
+```
+
+### Add the CSS to the headings
+
+Then, there is the CSS. You will need to attach CSS to the **MdxHeadings** Component.
+
+We are saying that when we `:hover` over the `H element` with the `.mdx_heading` class, we want to scoot the header over `-1.6ch` in size **BECAUSE** we are going to put the `#` there. With the added padding on the `#` we get the illusion nothing is moving. But it is first moving `-1.6ch`, and then places the `#` in the space which move the heading back to where it was.
+
+You may have to play with these numbers _a little_ depending on your `font-family` and `font-size`.
+
+```css
+.mdx_heading:hover::before {
+  content: '#';
+  position: relative;
+  /* adjust based on font width */
+  margin-left: -1.6ch;
+  padding-right: 0.2ch;
+  /* *** */
+  display: inline;
+  color: #505363;
+  font-size: 70%;
+}
+```
+
+## Use the custom header component in our single post component
+
+Now we have to use the customer header component.
+
+The before code could look like this:
+
+```js
+import Head from 'next/head';
+import Image from 'next/image';
+import dayjs from 'dayjs';
+
+import { useMDXComponent } from 'next-contentlayer/hooks';
+
+import { allPosts } from 'contentlayer/generated';
+import styles from './[slug].module.css';
+import { Fragment } from 'react';
+
+// Note: here we have an array of all the React components we want to use in the MDX, we will import it later using useMDXComponent
+
+const mdxComponents = {
+  Image,
+};
+
+export async function getStaticPaths() {
+  return {
+    paths: allPosts.map((post) => post.slug),
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({ params }) {
+  const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
+
+  const newPost = { ...post, date: dayjs(post.date).format('MMMM D, YYYY') };
+
+  return {
+    props: {
+      post: newPost,
+    },
+  };
+}
+
+const SinglePost = ({ post }) => {
+  // Here we create a const variable for the raw MDX code.
+  const MDXContent = useMDXComponent(post.body.code);
+
+  return (
+    <Fragment>
+      <Head>
+        <title>{post.title}</title>
+      </Head>
+      <div className={styles.wrapper + ' ' + styles.single_blog_post_page}>
+        <main className={styles.post}>
+          <article>
+            <header>
+              <h1>{post.title}</h1>
+
+              <Image
+                src={post.hero_image}
+                alt={post.hero_image_alt}
+                width={700}
+                height={500}
+              />
+              <p>
+                <span>
+                  <PublishDateIcon /> Published on <time>{post.date}</time>,
+                  written by
+                </span>
+                <span>
+                  <AuthorIcon /> {post.author}, Reading time:{' '}
+                </span>
+                <span>{post.readingTime.text}</span>
+              </p>
+            </header>
+            <div className={styles.article_body}>
+              // Here we import it into the appropriate place in our page
+              <MDXContent components={mdxComponents} />
+            </div>
+          </article>
+        </main>
+        <Aside />
+      </div>
+    </Fragment>
+  );
+};
+
+export default SinglePost;
+```
+
+We need to import the customer header component, and add it to the mdxComponent variable.
+
+The after code needs this:
+
+```js
+// Import it
+import {
+  MdxH1,
+  MdxH2,
+  MdxH3,
+  MdxH4,
+  MdxH5,
+  MdxH6,
+} from '../../../components/mdx/Mdxheadings';
+
+***
+// add it to the mdxComponent variable
+
+const mdxComponents = {
+  Image,
+  h1: MdxH1,
+  h2: MdxH2,
+  h3: MdxH3,
+  h4: MdxH4,
+  h5: MdxH5,
+  h6: MdxH6,
+};
+***
+```
+
+Special shoutout to [Mike Bifulco](https://twitter.com/irreverentmike) for his [excellent article on setting up autolinkink in heading tags](https://mikebifulco.com/posts/mdx-auto-link-headings-with-rehype-slug#this-is-tricky-with-markdown-and-mdx) that provided the structure for the solution today.
+
+Another special shoutout to [Josh Comeau](https://twitter.com/joshwcomeau) for his [article regarding partial rehydration](https://www.joshwcomeau.com/react/the-perils-of-rehydration/) which provided the solution to getting the code to work without errors.

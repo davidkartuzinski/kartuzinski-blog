@@ -1,0 +1,57 @@
+.socials {
+  display: none;
+}
+
+.socials ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  list-style-type: none;
+}
+
+h3 ~ .socials ul {
+  margin: auto;
+}
+
+.socials ul > li {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.socials ul > li:first-child {
+  padding-left: 0;
+}
+
+.socials ul > li:last-child {
+  padding-right: 0rem;
+}
+
+/* .socials ul > li > a,
+.socials ul > li > a:visited,
+.socials ul > li > a:hover,
+.socials ul > li > a:active {
+  color: var(--dark-brown);
+}
+
+aside .socials ul > li > a,
+aside .socials ul > li > a:visited,
+aside .socials ul > li > a:hover,
+aside .socials ul > li > a:active {
+  color: var(--dark-brown);
+} */
+
+.twitter
+/* a:visited,
+a:hover,
+a:active  */ {
+  color: var(--twitter);
+  color: red;
+}
+
+@media (min-width: 768px) {
+  .socials {
+    display: flex;
+  }
+}

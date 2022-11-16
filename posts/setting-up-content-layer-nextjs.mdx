@@ -1,0 +1,165 @@
+---
+title: Setting Up Content Layer with Next.js
+date: 2022-09-30
+dateModified: 2022-09-30
+author: David Kartuzinski
+description: 'Setting up Content Layer with your Next.js blog will save you a lot of time and automate many aspects of using MDX.'
+category: nextjs
+tags: ['mdx', 'nextjs', 'contentlayer']
+canonical: ''
+---
+
+## Contentlayer
+
+Contentlayer helps with your MDX files so you have less code.
+
+## What I am building
+
+I am building a blog like (Gatsby Theme Naked)[https://gatsythemenakedcore.gtsb.io/]. I built this theme for Gatsby, but I want to recreate it for Next.js and then go from there. The part that is related to Contentlayer is the .mdx files. And specifically the frontmatter.
+
+In the theme, I build my frontmatter like this:
+
+```
+title: 'Markdown Cheatsheet in MDX and Gatsby'
+slug: 'markdown-cheatsheet-mdx-gatsby'
+date: 2020-02-18
+dateModified: 2020-02-18
+author: 'David Kartuzinski'
+description: 'See how well Markdown is supported use MDX and Gatsby. Compared to the Markdown Cheatsheet.'
+categories: ['markdown', 'mdx', 'gatsby']
+tags: ['mdx', 'editor', 'markdown']
+hero_image: './markdown.png'
+hero_image_alt: 'Markdown Logo'
+canonical: ''
+```
+
+I will start with implementing the following:
+
+- title
+- date
+- dateModified
+- author
+- description
+- Hero Image
+- Hero Image Alt
+- Canonical
+  The `slug` is not needed as we will automatically create the slugs from the folder names. The `tags` and `categories` we'll add later.
+
+## Implementing Contentlayer in a brand new Next.js install
+
+The Contentlayer documentation and [delba.dev](https://delba.dev/blog/next-blog-structured-mdx-content-with-contentlayer) have their examples in `.ts` format. I will be using `.js` as I haven't learned TypeScript, and I believe there will be people who would like a `.js` version.
+
+### Install the needed `npm` dependencies
+
+In your command line terminal, you will need to install `contentlayer` and `next-contentlayer`.
+
+```bash title='Terminal'
+npm install contentlayer next-contentlayer
+```
+
+1. In your `root` directory, edit (or create) a `next.config.js` file. In it, you should have the following:
+
+```js title='next-config.js'
+const { withContentlayer } = require('next-contentlayer');
+
+const nextConfig = {};
+
+module.exports = withContentlayer(nextConfig);
+```
+
+2. In your `root` directory, create a `jsconfig.json` file. This file is very often used for those individuals who program in TypeScript. However, the [NextJs Docs about jsconfig.js](https://nextjs.org/docs/advanced-features/module-path-aliases) make it clear that this is the file used for creating path aliases. Which means, telling `NextJs` how to access certain files and in what directories. Contentlayer needs to be configured in this file, like below:
+
+```js
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "contentlayer/generated": ["./.contentlayer/generated"]
+    }
+  },
+  "include": [".contentlayer/generated"],
+  "exclude": ["node_modules"]
+}
+```
+
+3. In your `root` directory, create a `contentlayer.config.js` file. This file is the main configuration file that makes Contentlayer so magical. We will come back to it a few times, as we build out the blog. **Note:** You can read more about this section in the [Contentlayer Documentation](https://www.contentlayer.dev/docs/sources/files/mapping-document-types).
+
+a. Start off your `contentlayer.config.js` with the following content. (We are missing the `Tags` and `Categories`. You may want to add additional or less fields.)
+
+```js
+import { defineDocumentType, makeSource } from 'contentlayer/source-files';
+
+const Post = defineDocumentType(() => ({
+  name: 'Post',
+  contentType: 'mdx',
+  // Location of Post source files (relative to `contentDirPath`)
+  filePathPattern: `**/*.mdx`,
+  fields: {
+    title: {
+      type: 'string',
+      description: 'The title of the post',
+      required: true,
+    },
+    date: {
+      type: 'date',
+      description: 'The create date of the post',
+      required: true,
+    },
+    dateModified: {
+      type: 'date',
+      description: 'The last updated date of the post',
+      required: true, // mandatory so just use the created date until modified later.
+    },
+    author: {
+      type: 'string',
+      description: 'The author of the post',
+      required: true,
+    },
+    description: {
+      type: 'string',
+      description:
+        'The excerpt or description of the post to show as a snippet.',
+      required: true,
+    },
+    hero_image: {
+      type: 'string',
+      description: 'The main blog post hero image.',
+      required: true,
+    },
+    hero_image_alt: {
+      type: 'string',
+      description: 'The alt-text for the hero image for the blog post.',
+      required: true,
+    },
+    canonical: {
+      type: 'string',
+      description:
+        'If this is a copy or duplicate of another post, what is that URL',
+      required: false,
+    },
+  },
+  computedFields: {
+    slug: {
+      type: 'string',
+      resolve: (post) => `/blog/${post._raw.flattenedPath}`,
+    },
+  },
+}));
+
+export default makeSource({
+  // location of the source files
+  contentDirPath: 'posts',
+  documentTypes: [Post],
+});
+```
+
+4. Add `.contentlayer` to your `.gitignore` file. You probably don't want the generated json as part of your GitHub. Vercel, or wherever your hosting it, will get it.
+
+To the bottom of your `.gitignore` file.
+
+```bash
+#contentlater
+.contentlayer
+```
+
+npm install date-fns

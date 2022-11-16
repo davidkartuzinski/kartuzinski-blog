@@ -1,0 +1,178 @@
+---
+title: How to fonts properly in Next.js
+date: 2022-10-6
+dateModified: 2022-10-6
+author: David Kartuzinski
+description: I wanted to change the Google font in my Next.js project, and ended up finding out there are better ways to import fonts into your site.
+category: nextjs
+tags: ['fonts', 'nextjs']
+canonical: ''
+---
+
+I originally installed my fonts based on the [Next.js documentation on fonts](https://nextjs.org/docs/basic-features/font-optimization). This was great and a big improvement over other strategies for adding fonts to a website. What this gave me was this:
+
+```js:_document.js {7-11} showLineNumbers
+import { Html, Head, Main, NextScript } from 'next/document';
+
+export default function Document() {
+  return (
+    <Html lang='en'>
+      <Head>
+      </Head>
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
+  );
+}
+```
+
+## The problem with font loading from Google Fonts
+
+Aside from the fact I didn't find my font pairing was good, I felt limited in the styles I could download and then use. Too many options, and it would slow my website down, and too little options felt constraining.
+
+The first part of the solution was to use a **Variable Font**. When I left (and have now come back to) web development and software engineering some years ago, I had read some articles from Chris Coyier, [like this one on Variable Fonts](https://css-tricks.com/weird-things-variable-fonts-can-do/), but they were not widespread. Google has a great introduction to variable fonts you can read [here](https://fonts.google.com/knowledge/introducing_type/introducing_variable_fonts).
+
+I used [Font Pair and Compare](https://www.pairandcompare.net/) to help me find a good pair for [Figtree](https://fonts.google.com/specimen/Figtree), designed by the great, [Erik Kennedy](https://www.erikdkennedy.com/). I like this site because you can select many pairs and compare the pairs against other pairs to find the best one. I chose [Andada Pro](https://fonts.google.com/specimen/Andada+Pro) as the pair. Both are variable fonts and both match the feeling I want people to have about me.
+
+I always had the nagging feeling that making an extra call out to Google for my fonts was slowing my website. After digging around, I discovered that you can self-host fonts easily now.
+
+## Using Fontsource
+
+Enter in [Fontsource](https://fontsource.org/docs/introduction). Fontsource is a tool that let's you bring the advantages to self-hosting fonts to your website. Though I am not too concerned on the privacy aspects (I mean if any one is using Chrome, gmail, or any other Google service - the google.fonts tracking is the least of their problems), I definitely wanted **significant performance gains**.
+
+There are basically three steps to using Fontsource.
+
+1. Installing the fonts with `npm`
+2. Update the import statements in `_app.js`
+3. Updating the CSS file, `global.css` in this case.
+
+### 1. Installing fonts with npm
+
+Visit the Google Font pages for your font choices. The URL looks something like this:
+
+```html:google.fonts showLineNumbers
+https://fonts.google.com/specimen/FONT+NAME
+```
+
+You can get the exact name of the font from the url, but there will not be any capital letters or (+)plus signs. All lowercase and the (+)plus signs are converted to (-)dashes in the command.
+
+In my case, for **Figtree** and **Andada Pro**:
+
+```html:google-urls showLineNumbers
+<!-- Google URLS -->
+https://fonts.google.com/specimen/Figtree
+https://fonts.google.com/specimen/Andada+Pro
+```
+
+The corresponding installation commands using NPM. You can also always check the fonts and their install commands [here](https://fontsource.org/fonts).
+
+```bash:npm-install-commands showLineNumbers
+// the install command
+npm install -save @fontsource/<font-name>
+
+// the commands for my use-case
+npm install -save @fontsource/figtree
+npm install -save @fontsource/andada-pro
+```
+
+### 2. Updating the import statements in `_app.js`
+
+Importing the Font's requires a two-step mental model since we are using **Variable Fonts**.
+
+First, you need to basically know how you're going to use each of the fonts you're importing. Design-wise.
+
+and
+
+Second, you need to only import what you need based on your design requirements.
+
+For example, I am installing both **Figtree** and **Andada Pro**. Figtree will be used for my body text. Therefore, I will need bold, and light. Italics and so forth. The various weights. Andada Pro will only be used for the Heading titles and with one weight. So I can imported Andada Pro with only it's weights, not italic or underline, for example.
+
+The [fontsource documentation on variable-fonts](https://fontsource.org/docs/variable-fonts) covers this well.
+
+These `import` statements go in the `_app.js` file to ensure the font styles apply to the entire website. Importing them on a page, will limited the font to that page.
+
+My `_app.js` looks like this now:
+
+```js:_app.js {5, 8} showLineNumbers
+import '../styles/globals.css';
+import '../styles/prism-styles.css';
+
+// This contains ALL variable axes. Font files are larger.
+import "@fontsource/figtree/variable-full.css";
+
+// Contains ONLY variable weights and no other axes.
+import "@fontsource/andada-pro/variable.css";
+
+import Layout from '../components/structure/layout';
+
+function MyApp({ Component, pageProps }) {
+  return (
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  );
+}
+
+export default MyApp;
+```
+
+Now, the last step is to update my CSS.
+
+3. Updating the CSS file, `global.css` in this case.
+
+I already had **Figtree** as the default font for the entire website with this bit of CSS:
+
+```css:global.css {2, 5} showLineNumbers
+html {
+  font: 125%/1.4 'Figtree', sans-serif;
+  font-weight: 400;
+  font-size: 125%;
+  font-family: 'Figtree', sans-serif;
+  font-kerning: auto;
+  font-feature-settings: normal;
+}
+```
+
+and then additional CSS here for the `Body` regarding **figtree**.
+
+```css:global.css {3-6} showLineNumbers
+body {
+  word-wrap: break-word;
+  font-kerning: normal;
+  -moz-font-feature-settings: 'kern', 'liga', 'clig', 'calt';
+  font-feature-settings: 'kern', 'liga', 'clig', 'calt';
+  letter-spacing: 0.03em;
+  color: var(--dark-brown);
+  background-color: var(--white);
+}
+```
+
+For the second font, **Andada Pro**. I just wanted to use it for my headings. So my CSS looks like this:
+
+```css:global.css showLineNumbers
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Andada Pro', serif;
+  color: var(--dark-accent);
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0;
+  padding-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  text-rendering: optimizeLegibility;
+}
+```
+
+There you have it. I have now self-hosted my fonts and properly configured them in my Next.js website.
+
+**ps.** If you had Google Fonts installed in your `_document.js` file, make sure to delete the Google Fonts URL.

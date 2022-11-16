@@ -1,0 +1,159 @@
+---
+title: Build an image component for MDX in Next.js
+date: 2022-10-5
+dateModified: 2022-10-5
+author: David Kartuzinski
+description: To take advantage of Next.js processing capabilities it was important for me to create my own custom image component to use in my mdx posts.
+category: nextjs
+tags: ['mdx', 'nextjs', 'images']
+canonical: ''
+---
+
+There are other solutions to using the image component from the next library including this one of a [rehype next.js image plugin](https://kylepfromer.com/blog/nextjs-image-component-blog/). (Nice instructions [here](https://ironeko.com/posts/how-to-use-next-js-image-with-markdown-or-mdx).) These solutions have rehype plugin that automatically install the height and width for you. I rather do that manually.
+
+Because I wanted to add the height and width manually and for additional reasons covered below, I made my own custom image component that I can just call and use within my mdx posts.
+
+That way I get all the benefits of the image component and keep control of my blog post images.
+
+The image has two main forms. With a figcaption and without a figcaption.
+
+```js
+import Image from 'next/image';
+import styles from './MdxImage.module.css';
+
+// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figure#examples
+// https://www.scottohara.me/blog/2019/01/21/how-do-you-figure.html
+
+function MdxImage({ src, alt, width, height, figcaption, position }) {
+  const alignment = position ? position : 'center';
+  // if there is a figcaption
+  if (figcaption) {
+    const FigImage = (
+      <figure
+        style={{ textAlign: alignment }}
+        className={styles.figure}
+        role='figure'
+        aria-label={alt}
+      >
+        <Image src={src} alt={alt} width={width} height={height} />
+        <figcaption className={styles.figcaption}>{figcaption}</figcaption>
+      </figure>
+    );
+
+    return FigImage;
+  }
+
+  // Just an image
+  const FigImage = (
+    <figure
+      style={{ textAlign: alignment }}
+      className={styles.figure}
+      role='figure'
+      aria-label={alt}
+    >
+      <Image src={src} alt={alt} width={width} height={height} />
+    </figure>
+  );
+  return FigImage;
+}
+export default MdxImage;
+```
+
+After creating the component, we need to import it into our single post component page and then use it in MDX Components. We also need to rename Image to NextImage as we use it. And then we can use Image in MDX.
+
+```js
+// rename or alias Next Image
+import { default as NextImage } from 'next/image';
+import { default as Image } from '../../../components/mdx/MdxImages';
+
+***
+
+// now we can import it into the const variable of all the components we'll pass to MDX Component.
+const mdxComponents = {
+  Image,
+  h1: MdxH1,
+  h2: MdxH2,
+  h3: MdxH3,
+  h4: MdxH4,
+  h5: MdxH5,
+  h6: MdxH6,
+};
+
+***
+
+// Make sure the const is passed to MDXContent like so
+  <div className={styles.article_body}>
+      <MDXContent components={mdxComponents} />
+  </div>
+
+```
+
+Then you can use it in you .mdx pages.
+
+Below this image does not have a `FigCaption`.
+
+<Image
+  src='/images/markdown.png'
+  alt='Large Markdown Logo Picture'
+  width='200'
+  height='123'
+/>
+
+If you want an image with a `figcaption`, just pass the `figcaption` prop to the `Image` component. The default position is `center`.
+
+```js
+<Image
+  src='/images/markdown.png'
+  alt='Large Markdown Logo Picture'
+  width='200'
+  height='123'
+  figcaption='What a nice logo (and figcaption) this is'
+  position='' // left, center, or right
+/>
+```
+
+<Image
+  src='/images/markdown.png'
+  alt='Large Markdown Logo Picture'
+  width='200'
+  height='123'
+  figcaption='What a nice logo (and figcaption) this is'
+  position=''
+/>
+
+There are three positions for the `Image`: `left`, `center`, and `right`.
+
+**left alignment**
+
+<Image
+  src='/images/markdown.png'
+  alt='Large Markdown Logo Picture'
+  width='200'
+  height='123'
+  figcaption='What a nice logo (and figcaption) this is'
+  position='left'
+/>
+
+**center alignment**
+
+<Image
+  src='/images/markdown.png'
+  alt='Large Markdown Logo Picture'
+  width='200'
+  height='123'
+  figcaption='What a nice logo (and figcaption) this is'
+  position='center'
+/>
+
+**right alignment**
+
+<Image
+  src='/images/markdown.png'
+  alt='Large Markdown Logo Picture'
+  width='200'
+  height='123'
+  figcaption='What a nice logo (and figcaption) this is'
+  position='right'
+/>
+
+You could further modify this component to accept a Link and output a linked image using Link from Next/js. https://nextjs.org/docs/api-reference/next/link

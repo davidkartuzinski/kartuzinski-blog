@@ -1,0 +1,656 @@
+---
+title: My Markdown Cheatsheet
+date: 2022-10-2
+dateModified: 2022-10-2
+author: David Kartuzinski
+description: I sometimes forget how to do certain things in markdown, so I created my very own Markdown Cheatsheet.
+category: nextjs
+tags: ['mdx', 'nextjs']
+canonical: ''
+---
+
+<small>
+  Note: Taken from [Markdown
+  Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+  and edited in a few places to suit this theme.
+</small>
+
+This cheatsheet shows you the markdown that is supported when using Mdx with Gatsby.
+
+## images
+
+The image below. The image will show at it's largest size, either the size of the image itseld or the container div size.
+
+```js:image
+![This is the Markdown Logo](/images/markdown.png 'A Markdown Logo')
+```
+
+![This is the Markdown Logo](/images/markdown.png 'A Markdown Logo')
+
+If you want to control the size, is an `<img>` tag.
+
+```html:image
+<img
+  src="/images/markdown.png"
+  width="200"
+  height="123"
+  alt="markdown logo"
+  title="Markdown Logo"
+/>
+```
+
+<img
+  src='/images/markdown.png'
+  width='200'
+  height='123'
+  alt='markdown logo'
+  title='Markdown Logo'
+/>
+
+### Best way: When using Next.js, use the Image component
+
+Using the **Next.js** Image component is the best solution for images if you're using Next.js. The reason is because the images will be processed.
+
+```js:image
+<Image
+  src='/images/markdown.png'
+  alt='Large Markdown Logo Picture'
+  width={200}
+  height={123}
+/>
+```
+
+I saved the below image at 960x591 (w/h) pixel size. If you inspect the image, you will see that Next.js preprocessed the image and I didn't have to have a large image or deal with an image editor.
+
+Below this image does not have a `FigCaption`.
+
+<Image
+  src='/images/markdown.png'
+  alt='Large Markdown Logo Picture'
+  width='200'
+  height='123'
+/>
+
+If you want an image with a `figcaption`, just pass the `figcaption` prop to the `Image` component. The default position is `center`.
+
+```js:image
+<Image
+  src='/images/markdown.png'
+  alt='Large Markdown Logo Picture'
+  width='200'
+  height='123'
+  figcaption='What a nice logo (and figcaption) this is'
+  position='' // left, center, or right
+/>
+```
+
+<Image
+  src='/images/markdown.png'
+  alt='Large Markdown Logo Picture'
+  width='200'
+  height='123'
+  figcaption='What a nice logo (and figcaption) this is'
+  position=''
+/>
+
+There are three positions for the `Image`: `left`, `center`, and `right`.
+
+**left alignment**
+
+<Image
+  src='/images/markdown.png'
+  alt='Large Markdown Logo Picture'
+  width='200'
+  height='123'
+  figcaption='What a nice logo (and figcaption) this is'
+  position='left'
+/>
+
+**center alignment**
+
+<Image
+  src='/images/markdown.png'
+  alt='Large Markdown Logo Picture'
+  width='200'
+  height='123'
+  figcaption='What a nice logo (and figcaption) this is'
+  position='center'
+/>
+
+**right alignment**
+
+<Image
+  src='/images/markdown.png'
+  alt='Large Markdown Logo Picture'
+  width='200'
+  height='123'
+  figcaption='What a nice logo (and figcaption) this is'
+  position='right'
+/>
+
+## Headers
+
+Each of the 6 different headers are below.
+
+```md:headings
+# H1 - I am a Header
+
+## H2 - I am a Header
+
+### H3 - I am a Header
+
+#### H4 - I am a Header
+
+##### H5 - I am a Header
+
+###### H6 - I am a Header
+```
+
+# H1 - I am a Header
+
+## H2 - I am a Header
+
+### H3 - I am a Header
+
+#### H4 - I am a Header
+
+##### H5 - I am a Header
+
+###### H6 - I am a Header
+
+## Emphasis
+
+The modern way to add emphasis to words and phrases.
+
+```md:emphasis
+Emphasis, aka italics, with _asterisks_.
+
+Strong emphasis, aka bold, with **asterisks**.
+
+Combined emphasis with **asterisks and _single asteriks_**.
+
+Strikethrough uses two tildes. ~~Scratch this.~~
+```
+
+Emphasis, aka italics, with _asterisks_.
+
+Strong emphasis, aka bold, with **asterisks**.
+
+Combined emphasis with **asterisks and _single asteriks_**.
+
+Strikethrough uses two tildes. ~~Scratch this.~~
+
+## Lists
+
+These are the different types of lists.
+
+```md:lists
+1. First ordered list item
+2. Another item
+   - Unordered sub-list.
+3. Actual numbers don't matter, just that it's a number
+   1. Ordered sub-list
+4. And another item.
+
+- Unordered list can use asterisks
+
+* Or minuses
+
+- Or pluses
+```
+
+1. First ordered list item
+2. Another item
+   - Unordered sub-list.
+3. Actual numbers don't matter, just that it's a number
+   1. Ordered sub-list
+4. And another item.
+
+- Unordered list can use asterisks
+
+* Or minuses
+
+- Or pluses
+
+## Links leading off the website and staying on the website
+
+Immediately below are links leading to other websites. The following section shows how to use the Next/Js Link component for internal linking.
+
+This is how to create links.
+
+```md:links
+[I'm an inline-style link](https://www.google.com)
+
+[I'm an inline-style link with title](https://www.google.com "Google's Homepage")
+
+[I'm a reference-style link][arbitrary case-insensitive reference text]
+
+[I'm a relative reference to a repository file](../Article_1)
+
+[You can use numbers for reference-style link definitions][1]
+
+Or leave it empty and use the [link text itself].
+
+URLs and URLs in angle brackets will automatically get turned into links.
+http://www.example.com or <http://www.example.com> but not
+example.com.
+
+Some text to show that the reference links can follow later (see above).
+
+[arbitrary case-insensitive reference text]: https://www.mozilla.org
+[1]: http://slashdot.org
+[link text itself]: http://www.reddit.com
+```
+
+[I'm an inline-style link](https://www.google.com)
+
+[I'm an inline-style link with title](https://www.google.com "Google's Homepage")
+
+[I'm a reference-style link][arbitrary case-insensitive reference text]
+
+[I'm a relative reference to a repository file](../Article_1)
+
+[You can use numbers for reference-style link definitions][1]
+
+Or leave it empty and use the [link text itself].
+
+Some text to show that the reference links can follow later (see above).
+
+[arbitrary case-insensitive reference text]: https://www.mozilla.org
+[1]: http://slashdot.org
+[link text itself]: http://www.reddit.com
+
+### Internal linking
+
+```md:internal-linking
+[Linking to the blog page on this website](/blog)
+```
+
+If you click on this link, you will see the entire page refresh and you will lose state and other React goodies.
+[Linking to the blog page on this website](/blog)
+
+```js:link-component
+<Link href='/blog'>Blog</Link>
+```
+
+Now if you click on this link, using the Link component, the transition is smoother.
+
+<Link href='/blog'>Blog</Link>
+
+Therefore, link internally using the Link component. All the options for the Link component are covered in the [Link Documentation for Next](https://nextjs.org/docs/api-reference/next/link).
+
+## Code and Syntax highlighting (with PrismJS)
+
+Using PrismJS with Gatsby affords you the ability to share and highlght code snippets.
+
+```md:inline-code
+Inline code has only `one tick` around it.
+```
+
+Example of Inline Code:
+
+Inline code has only `one tick` around it.
+
+Blocks of code have three backticks around it. `CODE`. After the first three ticks add the language of choice. Look at these examples below:
+
+` ```js `
+
+```Js:Javascript
+var s = 'JavaScript syntax highlighting';
+alert(s);
+
+```
+
+` ```python `
+
+```python:Python
+s = "Python syntax highlighting"
+print s
+```
+
+```
+No language indicated, so no syntax highlighting.
+But let's throw in a <b>tag</b>. Acts like regular CODE.
+```
+
+The important thing is to use single ticks for small or short code snippets and tripe ticks for large code blocks.
+
+### Titles above the code blocks
+
+You should add some sort of title above your code blocks. After declaring the language type, add a colon and then the title. No spaces.
+
+Example 1:
+` ```js:javascript-code`
+
+```js:javascript-code
+// code
+```
+
+Example 2:
+` ```js:path/to/file`
+
+```js:path/to/file
+// code
+```
+
+### Showing Line Numbers and differences in code
+
+Sometimes when writing a tutorial or making notes regarding code, we need to see what code has been added to existing code blocks. And we also need to see what has been deleted and added. We can now show this by adding line numbers and by using the `diff` tag in the code block. See examples below:
+
+#### How to add line numbers and highlight added code
+
+````diff
++```js:logo-component {4, 11-16} showLineNumbers
+import Link from 'next/link';
+import Image from 'next/image';
+
+import styles from './logo.module.css';
+
+function Logo() {
+  return (
+    <div className={styles.logo}>
+      <Link href='/'>
+        <a>
+          <Image
+            src='/Kartuzinski-Logo.png'
+            alt='Logo for the Kartuzinski.com blog'
+            width={464}
+            height={116}
+          />
+        </a>
+      </Link>
+    </div>
+  );
+}
+
+export default Logo;
+```
+````
+
+Which gives us this:
+
+```js:logo-component {4, 11-16} showLineNumbers
+import Link from 'next/link';
+import Image from 'next/image';
+
+import styles from './logo.module.css';
+
+function Logo() {
+  return (
+    <div className={styles.logo}>
+      <Link href='/'>
+        <a>
+          <Image
+            src='/Kartuzinski-Logo.png'
+            alt='Logo for the Kartuzinski.com blog'
+            width={464}
+            height={116}
+          />
+        </a>
+      </Link>
+    </div>
+  );
+}
+
+export default Logo;
+```
+
+#### How to show differences in the code
+
+Here you will use `diff` instead of, for example, `js` for the language. Consider this example. We want to show how we change the code for Line 12 below.
+
+````diff {1, 12} showLineNumbers
+```diff:logo-component {12} showLineNumbers
+import Link from 'next/link';
+import Image from 'next/image';
+
+import styles from './logo.module.css';
+
+function Logo() {
+  return (
+    <div className={styles.logo}>
+      <Link href='/'>
+        <a>
+         // Add image here
+        </a>
+      </Link>
+    </div>
+  );
+}
+
+export default Logo;
+```
+````
+
+In our example, it gives us a starting point:
+
+```diff:logo-component showLineNumbers
+import Link from 'next/link';
+import Image from 'next/image';
+
+import styles from './logo.module.css';
+
+function Logo() {
+  return (
+    <div className={styles.logo}>
+      <Link href='/'>
+        <a>
++         // Add image here
+        </a>
+      </Link>
+    </div>
+  );
+}
+
+export default Logo;
+```
+
+and an ending point:
+
+```diff:logo-component showLineNumbers
+import Link from 'next/link';
+import Image from 'next/image';
+
+import styles from './logo.module.css';
+
+function Logo() {
+  return (
+    <div className={styles.logo}>
+      <Link href='/'>
+        <a>
+-         // Add image here
++         <Image
++           src='/Kartuzinski-Logo.png'
++           alt='Logo for the Kartuzinski.com blog'
++           width={464}
++           height={116}
++         />
+        </a>
+      </Link>
+    </div>
+  );
+}
+
+export default Logo;
+```
+
+### Special rehype-gfm functinality in your markdown | GFM
+
+#### Autolink literals
+
+```md:autolink-literals
+www.example.com, https://example.com, and contact@example.com.
+```
+
+www.example.com, https://example.com, and contact@example.com.
+
+#### Footnote
+
+```md:footnotes
+A note[^1]
+
+[^1]: Big note.
+```
+
+A note[^1]
+
+[^1]: Big note.
+
+#### Strikethrough
+
+```md:strikethrough
+~one~ or ~~two~~ tildes.
+
+```
+
+~one~ or ~~two~~ tildes.
+
+#### Table
+
+```md:tables
+| a   | b   |   c |  d  |
+| --- | :-- | --: | :-: |
+```
+
+| a   | b   |   c |  d  |
+| --- | :-- | --: | :-: |
+
+## Tables
+
+You can add tables to your blog posts like this.
+
+```md:tables
+Colons can be used to align columns.
+
+| Tables        |      Are      |  Cool |
+| ------------- | :-----------: | ----: |
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      |   centered    |   $12 |
+| zebra stripes |   are neat    |    $1 |
+
+There must be at least 3 dashes separating each header cell.
+The outer pipes (|) are optional, and you don't need to make the
+raw Markdown line up prettily. You can also use inline Markdown.
+
+| Markdown | Less      | Pretty     |
+| -------- | --------- | ---------- |
+| _Still_  | `renders` | **nicely** |
+| 1        | 2         | 3          |
+```
+
+Colons can be used to align columns.
+
+| Tables        |      Are      |   Cool |
+| ------------- | :-----------: | -----: |
+| col 3 is      | right-aligned | \$1600 |
+| col 2 is      |   centered    |   \$12 |
+| zebra stripes |   are neat    |    \$1 |
+
+There must be at least 3 dashes separating each header cell.
+The outer pipes (|) are optional, and you don't need to make the
+raw Markdown line up prettily. You can also use inline Markdown.
+
+| Markdown | Less      | Pretty     |
+| -------- | --------- | ---------- |
+| _Still_  | `renders` | **nicely** |
+| 1        | 2         | 3          |
+
+These tables are relatively easy to create. For additional control and functionality you could use [React Tables](https://tanstack.com/table/v8/?from=reactTableV7&original=https://react-table-v7.tanstack.com/)
+
+## Blockquotes
+
+Add a Blockquote using the following syntax.
+
+```markdown:blockquotes
+> Blockquotes are very handy in email to emulate reply text.
+> This line is part of the same quote.
+
+Quote break.
+
+> This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can _put_ **Markdown** into a blockquote.
+```
+
+> Blockquotes are very handy in email to emulate reply text.
+> This line is part of the same quote.
+
+Quote break.
+
+> This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can _put_ **Markdown** into a blockquote.
+
+## Inline HTML
+
+You could use raw HTML in your Markdown. But since this is Mdx you shouldn't need to. Now you can just simply create components and import theme.
+
+```html:inline-html
+<dl>
+  <dt>Definition list</dt>
+  <dd>Is something people use sometimes.</dd>
+
+  <dt>Markdown in HTML</dt>
+  <dd>Does *not* work **very** well. Use HTML <em>tags</em>.</dd>
+</dl>
+```
+
+<dl>
+  <dt>Definition list</dt>
+  <dd>Is something people use sometimes.</dd>
+
+  <dt>Markdown in HTML</dt>
+  <dd>Does *not* work **very** well. Use HTML <em>tags</em>.</dd>
+</dl>
+
+## Horizontal rule
+
+```md:hr
+Three or more...
+
+---
+
+Hyphens
+
+---
+
+Asterisks
+
+---
+
+Underscores
+```
+
+Three or more...
+
+---
+
+Hyphens
+
+---
+
+Asterisks
+
+---
+
+Underscores
+
+## Line breaks
+
+My basic recommendation for learning how line breaks work is to experiment and discover -- hit **Enter** once (i.e., insert one newline), then hit it twice (i.e., insert two newlines), see what happens. You'll soon learn to get what you want. "Markdown Toggle" is your friend.
+
+```md:line-breaks
+Here's a line for us to start with.
+
+This line is separated from the one above by two newlines, so it will be a _separate paragraph_.
+
+This line is also a separate paragraph, but...
+This line is only separated by a single newline, so it's a separate line in the _same paragraph_.
+```
+
+Here's a line for us to start with.
+
+This line is separated from the one above by two newlines, so it will be a _separate paragraph_.
+
+This line is also a separate paragraph, but...
+This line is only separated by a single newline, so it's a separate line in the _same paragraph_.
+
+## Summary
+
+As you can see using Markdown with PrismJs in a Nextjs or Gatsby application and Mdx gives you everything you could possibly need to correctly write your posts in Markdown.
