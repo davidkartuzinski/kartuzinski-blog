@@ -1,4 +1,8 @@
-import { defineDocumentType, makeSource } from 'contentlayer/source-files';
+import {
+  defineDocumentType,
+  makeSource,
+  defineNestedType,
+} from 'contentlayer/source-files';
 
 import readingTime from 'reading-time';
 import remarkGfm from 'remark-gfm';

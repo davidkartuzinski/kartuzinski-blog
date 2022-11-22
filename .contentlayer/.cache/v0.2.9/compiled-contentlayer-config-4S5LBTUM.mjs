@@ -95,4 +95,4 @@ var contentlayer_config_default = contentLayerConfig;
 export {
   contentlayer_config_default as default
 };
-//# sourceMappingURL=compiled-contentlayer-config-KE4XKO5M.mjs.map
+//# sourceMappingURL=compiled-contentlayer-config-4S5LBTUM.mjs.map
