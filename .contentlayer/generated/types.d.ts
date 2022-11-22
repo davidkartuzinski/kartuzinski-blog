@@ -19,13 +19,16 @@ export type Post = {
   date: IsoDateTimeString
   /** The last updated date of the post */
   dateModified: IsoDateTimeString
+  /** Is the post a draft? */
+  draft: boolean
   /** The author of the post */
   author: string
   /** The excerpt or description of the post to show as a snippet. */
   description: string
+  /** The related tags of the post. */
   tags?: string[] | undefined
-  /** The category of the post to show as a snippet. */
-  category: string
+  /** The related categories of the post. */
+  categories?: string[] | undefined
   /** If this is a copy or duplicate of another post, what is that URL */
   canonical?: string | undefined
   /** MDX file body */

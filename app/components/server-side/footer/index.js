@@ -6,8 +6,8 @@ const Footer = () => {
       <section className={styles.inner_footer}>
         <p>
           <small>
-            &copy; 2022 David Kartuzinski - A developer in Paris. All Rights
-            Reserved. <br /> Website built using{' '}
+            &copy; 2022 David Kartuzinski - A developer living in Paris, France.
+            All Rights Reserved. <br /> Website built using{' '}
             <a
               href='https://nextjs.org/blog/next-13'
               target='_blank'
@@ -23,6 +23,7 @@ const Footer = () => {
             >
               Premium Vercel
             </a>
+            .
           </small>
         </p>
       </section>

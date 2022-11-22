@@ -29,7 +29,8 @@ export default function Post({ params }) {
       title={post.title}
       author={post.author}
       date={post.date}
-      category={post.category}
+      categories={post.categories}
+      tags={post.tags}
       readingTime={post.readingTime.text}
       body={post.body.code}
     />

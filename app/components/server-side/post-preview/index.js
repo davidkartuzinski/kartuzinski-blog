@@ -4,9 +4,14 @@ import { shortenParagraph } from '../../../lib/helpers';
 import { allPosts } from '../../../../.contentlayer/generated';
 import dayjs from 'dayjs';
 
-import { ReadNextIcon, PublishDateIcon, CategoriesIcon } from '../icons';
+import {
+  ReadNextIcon,
+  PublishDateIcon,
+  CategoriesIcon,
+  TagsIcon,
+} from '../icons';
 
-const PostPreview = ({ slug, category, title, date, excerpt }) => (
+const PostPreview = ({ slug, categories, title, date, excerpt, tags }) => (
   <section className={styles.section}>
     <h2>
       <Link href={slug} passHref>
@@ -26,7 +31,21 @@ const PostPreview = ({ slug, category, title, date, excerpt }) => (
         <CategoriesIcon />
         <span className='text_small'>CATEGORY:</span>
 
-        <span className='text_small'>{category.toUpperCase()}</span>
+        {categories.map((category) => (
+          <span className='text_small' key={category}>
+            {category.toUpperCase()}
+          </span>
+        ))}
+      </div>
+      <div className={styles.meta}>
+        <TagsIcon />
+        <span className='text_small'>TAG:</span>
+
+        {tags.map((tag) => (
+          <span className='text_small' key={tag}>
+            {tag.toUpperCase()}
+          </span>
+        ))}
       </div>
     </div>
 
@@ -38,19 +57,27 @@ const PostPreview = ({ slug, category, title, date, excerpt }) => (
   </section>
 );
 
-function AllPostPreviews() {
-  const posts = allPosts.sort(
+function allPostPreviews() {
+  // only those posts which are not drafts, ie. Publish or Draft: false
+  const publishedPostsArray = allPosts.filter((post) => {
+    return post.draft === false;
+  });
+
+  // sort published posts into alphabetical order
+  const posts = publishedPostsArray.sort(
     (a, b) => Number(new Date(b.date)) - Number(new Date(a.date))
   );
 
+  // loop through published posts and format the date
   const tempAllPosts = posts.map((post) => ({
     ...post,
     date: dayjs(post.date).format('MMMM D, YYYY'),
   }));
 
+  // create an array from the JSON data for use in component
   const newPostsArray = tempAllPosts.map(
-    ({ title, date, slug, description, category }) => {
-      return { title, date, slug, description, category };
+    ({ title, date, slug, description, categories, tags }) => {
+      return { title, date, slug, description, categories, tags };
     }
   );
 
@@ -64,11 +91,12 @@ function AllPostPreviews() {
             date={post.date}
             excerpt={post.description}
             author={post.author}
-            category={post.category}
+            categories={post.categories}
+            tags={post.tags}
           />
         </ul>
       ))}
     </>
   );
 }
-export default AllPostPreviews;
+export default allPostPreviews;

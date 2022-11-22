@@ -6,6 +6,7 @@ import {
   PublishDateIcon,
   TimerIcon,
   CategoriesIcon,
+  TagsIcon,
   PreviousPageIcon,
   NextPageIcon,
 } from '../icons';
@@ -33,7 +34,15 @@ const mdxComponents = {
 
 import { useMDXComponent } from 'next-contentlayer/hooks';
 
-function PostLayout({ title, author, date, category, readingTime, body }) {
+function PostLayout({
+  title,
+  author,
+  date,
+  categories,
+  tags,
+  readingTime,
+  body,
+}) {
   const MDXContent = useMDXComponent(body);
   return (
     <div>
@@ -43,25 +52,38 @@ function PostLayout({ title, author, date, category, readingTime, body }) {
           <div>
             <div className={styles.meta}>
               <AuthorIcon />
-              <span>Written by:</span>
-              <span> {author}</span>
+              <span className='text_small'>WRITTEN BY:</span>
+              <span className='text_small'> {author.toUpperCase()}</span>
             </div>
             <div className={styles.meta}>
               <PublishDateIcon />
-              <span>Published on </span>
-              <span>
-                <time>{date}</time>
+              <span className='text_small'>PUBLISHED ON:</span>
+              <span className='text_small'>
+                <time>{date.toUpperCase()}</time>
               </span>
             </div>
             <div className={styles.meta}>
               <CategoriesIcon />
-              <span>Category:</span>
-              <span>{category}</span>
+              <span className='text_small'>CATEGORY:</span>
+              {categories.map((category) => (
+                <span className='text_small' key={category}>
+                  {category.toUpperCase()}
+                </span>
+              ))}
+            </div>
+            <div className={styles.meta}>
+              <TagsIcon />
+              <span className='text_small'>TAG:</span>
+              {tags.map((tag) => (
+                <span className='text_small' key={tag}>
+                  {tag.toUpperCase()}
+                </span>
+              ))}
             </div>
             <div className={styles.meta}>
               <TimerIcon />
-              <span>Reading time:</span>
-              <span>{readingTime}</span>
+              <span className='text_small'>READING TIME:</span>
+              <span className='text_small'>{readingTime.toUpperCase()}</span>
             </div>
           </div>
         </section>

@@ -19,7 +19,10 @@ const MdxHeading = ({ h, id, ...rest }) => {
   if (id) {
     return (
       <Link href={`#${id}`}>
-        <VariableHeader className={styles.mdx_heading} {...rest} />
+        <VariableHeader
+          className={styles.mdx_heading}
+          {...rest}
+        ></VariableHeader>
       </Link>
     );
   }
