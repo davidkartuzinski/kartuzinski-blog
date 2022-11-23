@@ -7,3 +7,7 @@
 .bio p {
   margin-top: 1rem;
 }
+
+.bio img {
+  margin: auto;
+}

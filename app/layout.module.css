@@ -7,8 +7,9 @@
 
 .section_content {
   grid-area: main;
-  padding-right: calc((100% - 320px) / 2);
-  padding-left: calc((100% - 320px) / 2);
+  overflow: hidden;
+  padding-right: calc((100% - 300px) / 2);
+  padding-left: calc((100% - 300px) / 2);
 }
 
 /* .article > ul {
@@ -31,6 +32,12 @@
   .section_widgets {
     padding-left: 5%;
     padding-right: 5%;
+  }
+}
+
+@media (max-width: 767px) {
+  .section_content {
+    padding-bottom: 2rem;
   }
 }
 
