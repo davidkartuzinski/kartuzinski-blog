@@ -43,3 +43,4 @@ I used these tools:
 3. [Access Color Generator](https://www.learnui.design/tools/accessible-color-generator.html) - to come up with my color scheme, I used this tool to ensure the contrast was sufficient.
 4. [Aspect Ratio Calculator](https://andrew.hedges.name/experiments/aspect_ratio/), an oldie but goodie. I use this to resize images to the correct width while maintaining aspect ratio.
 5. [Visual Type Scale](https://type-scale.com/), another oldie but goodie. This helps to create visual hieracky for my headings. (h1-h6 tags)
+6. [ResponsivelyApp](https://responsively.app/) This app is an open source, multibrowser browser. It let's you see your design across multiple screen sizes at the same time.
