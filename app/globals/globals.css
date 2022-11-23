@@ -54,7 +54,7 @@ h6 {
   --dark-brown: #322214;
   --black: #232b2b;
   --dark-accent: #1a659e;
-  --accent: #aa1f3b;
+  --accent: #a21435;
   --dark-tan: #e9e1d8;
 
   --link-blue: #0049b8;
@@ -62,7 +62,7 @@ h6 {
   --light-grey-color: #e8e9ed;
 
   --success-green: #007c45;
-  --error-red: #a61613;
+  --error-red: #a21435;
 
   --twitter: #0db0ef;
   --discord: #5865f2;
@@ -84,7 +84,13 @@ h6 {
 }
 
 html {
-  font-size: 125%; /* 20px */
+  font-size: 100%; /* 16px */
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 1.5rem; /* 24px */
+  }
 }
 
 body {
@@ -103,7 +109,7 @@ body {
 }
 
 p {
-  margin-bottom: 1rem;
+  margin-bottom: 1.4rem;
 }
 
 h1,
@@ -113,45 +119,94 @@ h4,
 h5,
 h6 {
   font-family: var(--font-source-serif-pro), serif;
-  margin: 3rem 0 1.38rem;
   color: var(--dark-accent);
   font-weight: 600;
   text-rendering: optimizeLegibility;
-  letter-spacing: 0.01em;
-  line-height: 1.3;
+  letter-spacing: -0.01em;
 }
 
 h1,
 .h1 {
   margin-top: 0;
+  margin: 0rem 0 1.38rem;
   font-size: 1.383rem;
 }
 
 h2,
 .h2 {
+  margin: 3rem 0 1.38rem;
   font-size: 1.296rem;
+  line-height: 1.3;
 }
 
 h3,
 .h3 {
+  margin: 3rem 0 1.38rem;
   font-size: 1.215rem;
+  line-height: 1.3;
 }
 
-h4 .h4 {
+h4,
+.h4 {
+  margin: 3rem 0 1.38rem;
+  font-size: 1.138rem;
+  line-height: 1.3;
+}
+
+h5,
+.h5 {
+  margin: 3rem 0 1.38rem;
   font-size: 1.138rem;
 }
 
-h5 .h5 {
+h6,
+.h6 {
+  margin: 3rem 0 1.38rem;
   font-size: 1.138rem;
-}
-
-h6 .h6 {
-  font-size: 1.138rem;
+  line-height: 1.3;
 }
 
 small,
 .text_small {
   font-size: 0.823rem;
+}
+
+@media (min-width: 768px) {
+  h1,
+  .h1 {
+    margin-top: 0;
+    font-size: 1.6667rem;
+  }
+
+  h2,
+  .h2 {
+    font-size: 1.36rem;
+  }
+
+  h3,
+  .h3 {
+    font-size: 1.228rem;
+  }
+
+  h4,
+  .h4 {
+    font-size: 1.138rem;
+  }
+
+  h5,
+  .h5 {
+    font-size: 1.138rem;
+  }
+
+  h6,
+  .h6 {
+    font-size: 1.138rem;
+  }
+
+  small,
+  .text_small {
+    font-size: 0.823rem;
+  }
 }
 
 aside h2,

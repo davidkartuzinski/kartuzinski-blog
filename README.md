@@ -33,8 +33,13 @@ In no particular order, thank you:
 2. Maximilian Schwarzmüller, [his comprehensive and easy to follow Udemy Next.js 10-12 Course](https://www.udemy.com/course/nextjs-react-the-complete-guide/learn/lecture/25229440?start=0#content)
 3. Rajdeep Singh, [his series of Next.js articles on Medium](https://medium.com/@officialrajdeepsingh/list/create-static-blog-with-nextjs-and-markdown-34cbab11b5ed)
 4. Hossein Shourabi, [excellent article on using ContentLayer](https://blog.mrcatdev.com/turns-your-mdx-files-include-yaml-into-data-with-contentlayer-in-nextjs-100daysofcode)
+5. Josh Comeau, for his [awesome blog](https://www.joshwcomeau.com/) and specifically his [custom CSS Reset](https://www.joshwcomeau.com/css/custom-css-reset/) and his outline on [how he built his own blog](https://www.joshwcomeau.com/blog/how-i-built-my-blog/) with Nextjs.
+6. Oliver Schöndorfer, for the [very understandable primer on font](https://pimpmytype.com/font-size/) and how to do it right.
 
 I used these tools:
 
 1. [coloors](https://coolors.co/) - to help me come up with a great color scheme.
 2. [favicon generator](https://favicon.io/) - from a 512px x 512px original favicon image.
+3. [Access Color Generator](https://www.learnui.design/tools/accessible-color-generator.html) - to come up with my color scheme, I used this tool to ensure the contrast was sufficient.
+4. [Aspect Ratio Calculator](https://andrew.hedges.name/experiments/aspect_ratio/), an oldie but goodie. I use this to resize images to the correct width while maintaining aspect ratio.
+5. [Visual Type Scale](https://type-scale.com/), another oldie but goodie. This helps to create visual hieracky for my headings. (h1-h6 tags)
