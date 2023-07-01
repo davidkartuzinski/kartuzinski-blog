@@ -2,20 +2,20 @@ import './globals/globals.css';
 import './globals/prism-styles.css';
 import styles from './layout.module.css';
 
-import { figtree, sourceSerifPro } from './globals/fonts';
-import Header from './components/server-side/header/index';
-import Footer from './components/server-side/footer/index';
-import Aside from './components/server-side/aside/index';
-import Widget from './components/server-side/widget';
-import Bio from './components/server-side/bio';
-import SocialFollowMe from './components/server-side/social-follow-me';
 import LatestPosts from './components/client-side/latest-posts';
+import Aside from './components/server-side/aside/index';
+import Bio from './components/server-side/bio';
+import Footer from './components/server-side/footer/index';
+import Header from './components/server-side/header/index';
+import SocialFollowMe from './components/server-side/social-follow-me';
+import Widget from './components/server-side/widget';
+import { figtree, lora } from './globals/fonts';
 
 export default function RootLayout({ children }) {
   return (
     <html lang='en' className={figtree.variable}>
       <head />
-      <body className={sourceSerifPro.variable}>
+      <body className={lora.variable}>
         <Header />
         <main className={styles.main}>
           <section className={styles.section_content}>{children}</section>

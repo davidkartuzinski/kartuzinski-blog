@@ -73,7 +73,7 @@ h6 {
   --figtree: var(--font-figtree), serif;
 }
 
-/**** Accessible .visually-hidden class 
+/**** Accessible .visually-hidden class
 **
 ** WARNING: If you delete these, your website will self-destruct.
 **
@@ -118,7 +118,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-source-serif-pro), serif;
+  font-family: var(--font-lora), serif;
   color: var(--dark-accent);
   font-weight: 600;
   text-rendering: optimizeLegibility;

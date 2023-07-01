@@ -12,7 +12,6 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "@next/font": "^13.0.3",
     "contentlayer": "^0.2.9",
     "dayjs": "^1.11.6",
     "eslint": "8.27.0",

@@ -1,10 +1,12 @@
-import { Figtree, Source_Serif_Pro } from '@next/font/google';
+import { Figtree, Lora } from 'next/font/google';
 
 export const figtree = Figtree({
   variable: '--font-figtree',
+  subsets: ['latin'],
 });
 
-export const sourceSerifPro = Source_Serif_Pro({
+export const lora = Lora({
   weight: '600',
-  variable: '--font-source-serif-pro',
+  variable: '--font-lora',
+  subsets: ['latin'],
 });
