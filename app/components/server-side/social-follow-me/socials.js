@@ -1,17 +1,10 @@
 import {
-  GithubIcon,
-  LinkedInIcon,
-  TwitterIcon,
-  DiscordIcon,
-  MastodonIcon,
-} from '../icons';
-import {
-  TwitterUrl,
-  LinkedInUrl,
-  GitHubUrl,
   DiscordUrl,
-  MastodonUrl,
+  GitHubUrl,
+  LinkedInUrl,
+  TwitterUrl,
 } from '../../../globals/global-data';
+import { DiscordIcon, GithubIcon, LinkedInIcon, TwitterIcon } from '../icons';
 
 const socials = [
   {
@@ -45,14 +38,6 @@ const socials = [
     title: 'Connect on Discord',
     icon: <DiscordIcon size='30' />,
     css: '--discord',
-  },
-  {
-    id: 5,
-    label: 'Mastodon',
-    url: MastodonUrl,
-    title: 'Connect on Mastodon',
-    icon: <MastodonIcon size='30' />,
-    css: '--mastodon',
   },
 ];
 
