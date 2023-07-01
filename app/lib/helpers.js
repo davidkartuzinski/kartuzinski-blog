@@ -8,3 +8,13 @@ export function shortenParagraph(paragraph, char) {
 
   return trmStr(paragraph, char).concat('...');
 }
+
+// https://www.30secondsofcode.org/js/s/slugify
+export function slugify(string) {
+  return string
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
