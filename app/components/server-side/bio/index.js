@@ -1,11 +1,12 @@
-import styles from './bio.module.css';
 import Image from 'next/image';
+import styles from './bio.module.css';
+import bioImage from '../../../../public/david-kartuzinski.jpg';
 
 function Bio() {
   return (
     <section className={styles.bio}>
       <Image
-        src='/david-kartuzinski.jpg'
+        src={bioImage}
         alt='Picture of David Kartuzinski, author'
         width={243}
         height={243}
