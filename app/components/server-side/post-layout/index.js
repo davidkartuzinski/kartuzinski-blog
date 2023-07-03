@@ -1,35 +1,19 @@
-import styles from './post-layout.module.css';
 import Link from 'next/link';
+import styles from './post-layout.module.css';
 
 import {
   AuthorIcon,
-  PublishDateIcon,
-  TimerIcon,
   CategoriesIcon,
+  PublishDateIcon,
   TagsIcon,
-  PreviousPageIcon,
-  NextPageIcon,
+  TimerIcon,
 } from '../icons';
 
-import {
-  MdxH1,
-  MdxH2,
-  MdxH3,
-  MdxH4,
-  MdxH5,
-  MdxH6,
-} from '../../client-side/mdx/Mdxheadings';
 import { default as Image } from '../mdx/MdxImages';
 
 const mdxComponents = {
   Image,
   Link,
-  h1: MdxH1,
-  h2: MdxH2,
-  h3: MdxH3,
-  h4: MdxH4,
-  h5: MdxH5,
-  h6: MdxH6,
 };
 
 import { useMDXComponent } from 'next-contentlayer/hooks';

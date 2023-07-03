@@ -1,6 +1,7 @@
 import { allPosts } from '../../../.contentlayer/generated';
-import PostLayout from '../../components/server-side/post-layout';
+
 import dayjs from 'dayjs';
+import PostLayout from '../../components/server-side/post-layout';
 
 export const dynamicParams = false;
 
