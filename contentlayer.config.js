@@ -1,15 +1,10 @@
-import {
-  defineDocumentType,
-  makeSource,
-  defineNestedType,
-} from 'contentlayer/source-files';
+import { defineDocumentType, makeSource } from 'contentlayer/source-files';
 
 import readingTime from 'reading-time';
-import remarkGfm from 'remark-gfm';
-import rehypeSlug from 'rehype-slug';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeCodeTitles from 'rehype-code-titles';
 import rehypePrism from 'rehype-prism-plus';
+import rehypeSlug from 'rehype-slug';
+import remarkGfm from 'remark-gfm';
 
 const computedFields = {
   readingTime: { type: 'json', resolve: (post) => readingTime(post.body.raw) },
@@ -83,19 +78,7 @@ const contentLayerConfig = makeSource({
   documentTypes: [Post],
   mdx: {
     remarkPlugins: [remarkGfm],
-    rehypePlugins: [
-      rehypeSlug,
-      rehypeCodeTitles,
-      rehypePrism,
-      [
-        rehypeAutolinkHeadings,
-        {
-          properties: {
-            className: ['anchor'],
-          },
-        },
-      ],
-    ],
+    rehypePlugins: [rehypeSlug, rehypeCodeTitles, rehypePrism],
   },
 });
 

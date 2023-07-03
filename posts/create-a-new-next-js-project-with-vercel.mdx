@@ -1,0 +1,211 @@
+---
+title: Create a new Next.js project with Vercel
+date: 2023-7-1
+dateModified: 2023-7-1
+draft: false
+author: David Kartuzinski
+description: How to start a new project using Next.js and Vercel, including a custom domain name and github integration.
+categories:
+  - nextjs
+tags:
+  - vercel,
+  - nextjs
+canonical: ''
+---
+
+I have been using [Vercel Pro](https://vercel.com/) for over a year. I have been paying the $20 / month and quite frankly, I have never had such a handsoff experience with hosting. As long as I continue to develop my skills using React or Next.js, I will continue to host them on Vercel.
+
+## Signup for Vercel Hobby or purchase Vercel Pro
+
+Signing up for Vercel is quite simply.
+
+- Go to [https://vercel.com/signup](https://vercel.com/signup) to signup.
+- Choose **Hobby** or **Pro**. You can start with **Hobby** and upgrade easily whenever you are ready or want to.
+- They will ask for your name.
+- Next, you have a choice of using your **Email / Password** or to login with **GitHub**. I prefer **Email / Password**, but then you later have to connect to you GitHub anyway.
+
+There are a few minor steps, but that is how you signup.
+
+## Optional: Purchase a Domain Name
+
+For important (to me) projects or portfolio projects, I will purchase a domain name. You can use a vercel hosted domain,
+like this [https://four-card-section-six.vercel.app/](https://four-card-section-six.vercel.app/) which is totally fine if you're practicing, but the free domain comes with the **.vercel.app** extension.
+
+You can purchase your domain directly from Vercel from your Dashboard. There are a ton of options, I personally like [Dynadot](https://www.dynadot.com/). They have free privacy and their dashboard is straightforward. I especially like the simply checkout process and the lack of aggressive upselling.
+
+Later, you will need to point the domain name to Vercel using DNS.
+
+After purchasing your domain, you need to set-up a new domain and project within Vercel. _NOTE: There are different steps if you are **NOT** using a purchased domain name. See below._
+
+### Setup a new Domain and Project in Vercel
+
+Setting up a domain and project in Vercel is simple. Follow these steps:
+
+- From the Vercel Dashboard, find the white button, **Add New...**, in the top right.
+- Click on it and select, **Domain**.
+- Click on **Add** on the top right menu.
+- You are creating a new project, so click on the blue, "create a new project" link.
+- Give your project a name and continue.
+- Enter the domain name you purchased, and click, **Add**.
+
+## Set-up a clean GitHub Project repository
+
+If you're reading this, you probably already have a [GitHub](https://github.com/) account. And you probably know how to create a repo.
+
+This is a good point to create your repo.
+
+## Connect your GitHub project to Vercel
+
+Log back into your Vercel Account. You need to connect your GitHub to Vercel. You will either connect to a brand new project or connect your GitHub to the added domain name.
+
+- From the Vercel Dashboard, find the white button, **Add New...**, in the top right.
+- Click on it and select, **Porject**
+- You should still be connected to your GitHub account in the browser, and all your Repos should appear. Find the repo you just created for this project, and click on **Import**.
+
+There might be a few additional minor steps, but it should connect successfully. If you **DID NOT** purchase a Domain name, you can skip past the next section, "
+
+### Connect your domain project in Vercel to GitHub
+
+OPTIONAL: If you **added a domain**, your next steps are:
+
+- At your Dashboard, you will see your project. If it is not already connected to GitHub, it will say, "No Git Repository Connected."
+- Click into the Project
+- You will see a big what button saying, "Connect Git Repository"
+- Then you will have an option of connecting to **GitHub**. **GitLab** or **Bitbucket**. In this example, we want GitHub. Click **GitHub**.
+- Optional: You will need to log into GitHub on a separate browser tab if you've logged out. Otherwise, Vercel will ask you to log in as part of the connecting process.
+- Choose the repository, and press **Connect**.
+
+If it connects successfully, you will get a blue colored pop-up saying it was successful.
+
+### Optional: Connect your domain to Vercel
+
+Now is a good time to connect your domain name to Vercel.
+
+You will first need to configure Vercel to use DNS.
+
+- From the Vercel Dashboard, click into your project.
+- On the top menu, click on **Settings**.
+- On the left menu, click on **Domains**.
+- Under **Domains** you will first see your domain name, and underneath a _.vercel.app_ domain. You want your domain. Click on the **Edit** button.
+- You should see an error. **Invalid Configuration**
+- Underneath, you see **A Record (Recommended)** or **Nameservers**, click on **Nameservers**.
+- From here, enable DNS by clicking on **Enable Vercel DNS**.
+- You will get something like this:
+
+```bash
+ns1.vercel-dns.com
+ns2.vercel-dns.com
+```
+
+- Now you need to go back to Dynadot or whereever you purchased your domain and edit the DNS servers. Each registry is a little different but it should be evident. If you need help, ask the customer service.
+
+Note: After you put in the DNS records from Vercel, it can take a few hours before it is recognized around the world. Vercel will normally find it within 2 hours (from my experience).
+
+## Clone your GitHub repo to start your Next.js project
+
+Now you will clone your GitHub repo into your computer. After doing this we will test the Vercel set-up
+
+- Clone the repo by navigating to your project, and clicking on the **Green** button, and click the copy button next to the link.
+- In your Terminal, navigate to the folder and use the following command:
+
+```bash
+git clone https://github.com/YOUR-NAME/YOUR-PROJECT.git
+```
+
+- Next, navigate into the project folder.
+  ```bash
+  cd project-folder
+  ```
+
+## Install Next.js 13
+
+You should have Node.js 18 (_to be compatible with Vercel Hosting_) installed on your computer. You can check which version you have with `node -v`. If you don't have Node.js 18 or higher, then you need ask your friend Google how to upgrade your node version based on your specific operating system and set-up.
+
+More in-depth instructions on installing Next.js can be found at the [Next.js installation page](https://nextjs.org/docs/getting-started/installation).
+
+- The next step, from the prompt, is to install Next.js. Use the following command:
+
+```bash
+npx create-next-app@latest
+```
+
+- Answer each of the questions:
+
+```bash
+Need to install the following packages:
+  create-next-app@13.4.7
+Ok to proceed? (y)
+
+What is your project named? my-app
+Would you like to use TypeScript? No / Yes
+Would you like to use ESLint? No / Yes
+Would you like to use Tailwind CSS? No / Yes
+Would you like to use `src/` directory? No / Yes
+Would you like to use App Router? (recommended) No / Yes
+Would you like to customize the default import alias? No / Yes
+```
+
+There are a bunch of different options. But I use **ESLint** and the **App Router**. The rest, I decline. You do you, and choose whichever options you want, and perhaps check the above link if you have further questions.
+
+After Next.js is installed successfully, you should see a _Success!_ message.
+
+- Now, open the project in your code editor. I use [VS Code](https://code.visualstudio.com/), and I have set-up using the `code .` command to automatically open an instance of VS Code from the terminal.
+
+- From your terminal navigate into the Next.js project folder. It will be the folder with your project name from the above steps (when you installed it).
+
+- Now start the app with the following command:
+
+```bash
+npm run dev
+```
+
+If you go to your [localhost:3000](http://localhost:3000/), you should see the very nice app running with NEXT.js shining in the middle.
+
+We want to test the connection between your computer, GitHub and Vercel next.
+
+## Final Vercel Configurations
+
+Before Vercel is ready to publish your project, you will need to go back into Vercel and tell it about your Project.
+
+- Log back into Vercel. And from the Dashboard, click into your project.
+- From the Project Dashboard, click to the **Settings** tab.
+- You should now be in the **General** page. Under **Build & Development Settings**, choose a _Framework Preset_. In this case, choose, `Next.js`
+- Now, scroll down to the **Root Directory**. When you set up your Next.js project you gave it a name, this name became the name of the folder with Next.js in it. This is the root of your project. It should be at the same level as the `.gitignore` and `README.md` files in your repo. Type in the name `myawesomeporject` without any slashes. And then **Save**.
+- Uncheck the **Include source files outside of the Root Directory in the Build Step.** And then **Save**.
+
+Now you are ready to wrap all this up.
+
+## Testing the workflow and ensuring all is good with the workflow
+
+In your code editor, navigate to `app/page.js`.
+
+Go ahead and change something and save it. I change a few things and make it saw "Coming soon" and my App Name.
+
+Note: You may get an error related to **ESLINT**, this [StackOverflow](https://stackoverflow.com/questions/68163385/parsing-error-cannot-find-module-next-babel) has several solutions. Scroll down past the first answer. You may need to try a few of the steps and restart **ESLINT** in your code editor.
+
+### Push the new changes to your GitHub Repo for the project.
+
+You should have installed Next.js 13 and made a few changes to the app with perhaps a "Coming Soon" or other message. You should have likewise seen and been satisfied with the results in your local development environment (Localhost:3000).
+
+- From the Terminal, stop the app from running. `Ctrl - C`
+- Add all changed files to the **commit**:
+
+```bash
+git add .
+```
+
+- Commit the files with a proper message:
+
+```bash
+git commit -m "Next.js app installed. Modified home page for the project."
+```
+
+- Push the changes to GitHub.
+
+```bash
+git push
+```
+
+You can navigate to your GitHub project and you will see that your changes have been received.
+
+You should now be able to navigate to your Vercel Dashboard and see your project. You will either see it at your custom domain name or the vercel.app URL which you will see in your dashboard.

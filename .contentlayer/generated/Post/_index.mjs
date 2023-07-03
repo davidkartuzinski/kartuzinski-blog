@@ -3,9 +3,10 @@
 import addActiveStyleToNextjsLinkMdx from './add-active-style-to-nextjs-link.mdx.json' assert { type: 'json' }
 import addBreadCrumbsToNextjsMdx from './add-bread-crumbs-to-nextjs.mdx.json' assert { type: 'json' }
 import buildACustomImageComponentForMdxNextJsMdx from './build-a-custom-image-component-for-mdx-next-js.mdx.json' assert { type: 'json' }
+import createANewNextJsProjectWithVercelMdx from './create-a-new-next-js-project-with-vercel.mdx.json' assert { type: 'json' }
 import howToAddFontsProperlyInNextJsMdx from './how-to-add-fonts-properly-in-next-js.mdx.json' assert { type: 'json' }
 import howToSetUpLinksInHeadingsMdxNextJsMdx from './how-to-set-up-links-in-headings-mdx-next-js.mdx.json' assert { type: 'json' }
 import markdownCheatsheetMdx from './markdown-cheatsheet.mdx.json' assert { type: 'json' }
 import settingUpContentLayerNextjsMdx from './setting-up-content-layer-nextjs.mdx.json' assert { type: 'json' }
 
-export const allPosts = [addActiveStyleToNextjsLinkMdx, addBreadCrumbsToNextjsMdx, buildACustomImageComponentForMdxNextJsMdx, howToAddFontsProperlyInNextJsMdx, howToSetUpLinksInHeadingsMdxNextJsMdx, markdownCheatsheetMdx, settingUpContentLayerNextjsMdx]
+export const allPosts = [addActiveStyleToNextjsLinkMdx, addBreadCrumbsToNextjsMdx, buildACustomImageComponentForMdxNextJsMdx, createANewNextJsProjectWithVercelMdx, howToAddFontsProperlyInNextJsMdx, howToSetUpLinksInHeadingsMdxNextJsMdx, markdownCheatsheetMdx, settingUpContentLayerNextjsMdx]
