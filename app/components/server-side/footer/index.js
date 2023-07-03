@@ -6,8 +6,8 @@ const Footer = () => {
       <section className={styles.inner_footer}>
         <p>
           <small>
-            &copy; 2022 David Kartuzinski - A developer living in Paris, France.
-            All Rights Reserved. <br /> Website built using{' '}
+            &copy; 2022 - 2023 David Kartuzinski - A developer living in Paris,
+            France. All Rights Reserved. <br /> Website built using{' '}
             <a
               href='https://nextjs.org/blog/next-13'
               target='_blank'
@@ -21,7 +21,7 @@ const Footer = () => {
               target='_blank'
               rel='noopener noreferrer'
             >
-              Premium Vercel
+              Vercel Pro
             </a>
             .
           </small>
